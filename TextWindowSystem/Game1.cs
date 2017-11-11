@@ -100,6 +100,7 @@ namespace net.PhoebeZeitler.TextWindowSystem
                 {
                     transparency = 255;
                 }
+                window.SetTransparency(transparency);
             }
 
             base.Update(gameTime);
@@ -128,7 +129,7 @@ namespace net.PhoebeZeitler.TextWindowSystem
             Vector2 textPos = new Vector2(200, 525);
             spriteBatch.DrawString(defaultFont, "Testing", textPos, Color.White);
             //*/
-            window.Draw(spriteBatch, new Color(Color.White, transparency));
+            window.Draw(spriteBatch);
             window2.Draw(spriteBatch);
 
             spriteBatch.End();

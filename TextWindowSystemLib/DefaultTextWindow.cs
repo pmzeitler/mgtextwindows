@@ -24,6 +24,7 @@ namespace net.PhoebeZeitler.TextWindowSystem
         // Appearance Info 
         protected Rectangle textArea { get; set; } = new Rectangle(Point.Zero, Point.Zero);
         protected Color tintValue { get; set; } = Color.White;
+        protected int transparency { get; set; } = 255;
         protected WindowBorder border { get; set; } = null;
         protected int borderBuffer { get; set; } = 5;
         protected Color bgColor { get; set; } = Color.Salmon;
@@ -46,6 +47,23 @@ namespace net.PhoebeZeitler.TextWindowSystem
         public bool SetWindowText(String windowTextIn)
         {
             textContents = windowTextIn;
+            return true;
+        }
+
+        public bool SetTransparency(int transparencyIn)
+        {
+            if (transparencyIn > 255)
+            {
+                this.transparency = 255;
+            }
+            else if (transparencyIn < 0)
+            {
+                this.transparency = 0;
+            }
+            else
+            {
+                this.transparency = transparencyIn;
+            }
             return true;
         }
 
@@ -120,10 +138,16 @@ namespace net.PhoebeZeitler.TextWindowSystem
 
         public virtual bool Draw(SpriteBatch sb)
         {
-            return this.Draw(sb, this.tintValue);
+            return this.Draw(sb, this.tintValue, this.transparency);
         }
 
+
         public virtual bool Draw(SpriteBatch sb, Color tintValue)
+        {
+            return this.Draw(sb, tintValue, this.transparency);
+        }
+
+        public virtual bool Draw(SpriteBatch sb, Color tintValue, int transparency)
         {
             bool retval = false;
 
@@ -135,7 +159,7 @@ namespace net.PhoebeZeitler.TextWindowSystem
             }
             try
             {
-                sb.Draw(this.DrawableTexture, this.dimensions, tintValue);
+                sb.Draw(this.DrawableTexture, this.dimensions, new Color(tintValue, transparency));
                 retval = true;
             }
             catch (ArgumentNullException anex)

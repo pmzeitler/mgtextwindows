@@ -8,5 +8,7 @@ namespace net.PhoebeZeitler.TextWindowSystem
     {
         bool Draw(SpriteBatch sb);
         bool Draw(SpriteBatch sb, Color tintValue);
+        bool Draw(SpriteBatch sb, Color tintValue, int transparency);
+
     }
 }
