@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace net.PhoebeZeitler.TextWindowSystem
@@ -6,5 +7,6 @@ namespace net.PhoebeZeitler.TextWindowSystem
     interface DrawableWindow
     {
         bool Draw(SpriteBatch sb);
+        bool Draw(SpriteBatch sb, Color tintValue);
     }
 }

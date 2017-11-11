@@ -120,6 +120,11 @@ namespace net.PhoebeZeitler.TextWindowSystem
 
         public virtual bool Draw(SpriteBatch sb)
         {
+            return this.Draw(sb, this.tintValue);
+        }
+
+        public virtual bool Draw(SpriteBatch sb, Color tintValue)
+        {
             bool retval = false;
 
             if ((this.drawableTexture == null) || (!this.cacheValid))
@@ -130,7 +135,7 @@ namespace net.PhoebeZeitler.TextWindowSystem
             }
             try
             {
-                sb.Draw(this.DrawableTexture, this.dimensions, this.tintValue);
+                sb.Draw(this.DrawableTexture, this.dimensions, tintValue);
                 retval = true;
             }
             catch (ArgumentNullException anex)

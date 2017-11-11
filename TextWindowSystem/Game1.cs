@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 //using net.PhoebeZeitler.TextWindowSystem;
 
 namespace net.PhoebeZeitler.TextWindowSystem
@@ -18,6 +19,11 @@ namespace net.PhoebeZeitler.TextWindowSystem
         //RenderTarget2D rt;
         DefaultTextWindow window;
         DefaultTextWindow window2;
+
+        int transparency = 255;
+        Int64 currentTime = 0;
+
+        int framesPerSecond = 60;
 
         public Game1()
         {
@@ -60,7 +66,7 @@ namespace net.PhoebeZeitler.TextWindowSystem
             window = new DefaultTextWindow("demo", new Rectangle(250, 500, 500, 150), Color.AliceBlue, "AliceBlueDemoBox", defaultFont, Color.DarkOrchid);
             window.SetupBorder(border, 8);
 
-            window2 = new DefaultTextWindow("demo2", new Rectangle(88, 150, 400, 80), Color.DarkSeaGreen, "SmallDemoBox", defaultFont, Color.Silver);
+            window2 = new DefaultTextWindow("demo2", new Rectangle(88, 50, 400, 80), Color.DarkSeaGreen, "SmallDemoBox", defaultFont, Color.Silver);
 
         }
 
@@ -85,6 +91,17 @@ namespace net.PhoebeZeitler.TextWindowSystem
 
             // TODO: Add your update logic here
 
+            currentTime += gameTime.ElapsedGameTime.Milliseconds;
+            if (currentTime >= (1000 / framesPerSecond))
+            {
+                currentTime = 0;
+                transparency -= 4;
+                if (transparency <= 0)
+                {
+                    transparency = 255;
+                }
+            }
+
             base.Update(gameTime);
         }
 
@@ -97,35 +114,22 @@ namespace net.PhoebeZeitler.TextWindowSystem
 
             RenderTargetBinding[] oldTarget = spriteBatch.GraphicsDevice.GetRenderTargets();
             
-            /*
-            spriteBatch.GraphicsDevice.SetRenderTarget(rt);
-
-            SpriteBatch sb = new SpriteBatch(spriteBatch.GraphicsDevice);
-
-            sb.Begin();
-            sb.GraphicsDevice.Clear(Color.Salmon);
-
-            sb.DrawString(defaultFont, "Inner Box", new Vector2(30, 30), Color.Green);
-            sb.End();
-
-            spriteBatch.GraphicsDevice.SetRenderTargets(oldTarget);
-            */
-
-
-            GraphicsDevice.Clear(Color.YellowGreen);
-
+            GraphicsDevice.Clear(Color.Black);
             spriteBatch.Begin();
-            
 
-            Vector2 textPos = new Vector2(32, 32);
+                Vector2 textPos = new Vector2(200, 525);
+                spriteBatch.DrawString(defaultFont, "Testing", textPos, Color.White);
+            spriteBatch.End();
+
+            BlendState blendState = BlendState.NonPremultiplied;
+
+            spriteBatch.Begin(SpriteSortMode.Deferred, blendState);
+            /*
+            Vector2 textPos = new Vector2(200, 525);
             spriteBatch.DrawString(defaultFont, "Testing", textPos, Color.White);
-
-
-            window.Draw(spriteBatch);
+            //*/
+            window.Draw(spriteBatch, new Color(Color.White, transparency));
             window2.Draw(spriteBatch);
-
-            //spriteBatch.Draw(rt, new Vector2(250, 500), Color.White);
-
 
             spriteBatch.End();
 
