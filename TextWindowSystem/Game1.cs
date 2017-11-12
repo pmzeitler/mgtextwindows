@@ -4,6 +4,12 @@ using Microsoft.Xna.Framework.Input;
 using System;
 //using net.PhoebeZeitler.TextWindowSystem;
 
+
+/// <summary>
+/// This application uses LiteDB for its data acquisition and retrieval.
+/// Please see https://github.com/mbdavid/LiteDB/wiki for usage instructions
+/// </summary>
+
 namespace net.PhoebeZeitler.TextWindowSystem
 {
     /// <summary>
