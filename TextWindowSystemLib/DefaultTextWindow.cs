@@ -141,6 +141,10 @@ namespace net.PhoebeZeitler.TextWindowSystem
             return this.Draw(sb, this.tintValue, this.transparency);
         }
 
+        public virtual bool Draw(SpriteBatch sb, int transparency)
+        {
+            return this.Draw(sb, this.tintValue, transparency);
+        }
 
         public virtual bool Draw(SpriteBatch sb, Color tintValue)
         {

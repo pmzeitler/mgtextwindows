@@ -26,6 +26,8 @@ namespace net.PhoebeZeitler.TextWindowSystem
         DefaultTextWindow window;
         DefaultTextWindow window2;
 
+        WindowLayer layer;
+
         int transparency = 255;
         Int64 currentTime = 0;
 
@@ -75,6 +77,12 @@ namespace net.PhoebeZeitler.TextWindowSystem
             window.SetupBorder(border, 8);
 
             window2 = new DefaultTextWindow("demo2", new Rectangle(88, 50, 400, 80), Color.DarkSeaGreen, "SmallDemoBox", defaultFont, Color.Silver);
+
+            layer = new WindowLayer("Layer 0");
+
+            layer.AddWindow(window);
+            layer.AddWindow(window2);
+
 
         }
 
@@ -141,8 +149,11 @@ namespace net.PhoebeZeitler.TextWindowSystem
             Vector2 textPos = new Vector2(200, 525);
             spriteBatch.DrawString(defaultFont, "Testing", textPos, Color.White);
             //*/
-            window.Draw(spriteBatch);
-            window2.Draw(spriteBatch);
+
+            //window.Draw(spriteBatch);
+            //window2.Draw(spriteBatch);
+
+            layer.Draw(spriteBatch);
 
             spriteBatch.End();
 

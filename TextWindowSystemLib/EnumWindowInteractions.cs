@@ -19,7 +19,15 @@ namespace net.PhoebeZeitler.TextWindowSystem
         // d-pad/arrow left
         CURSOR_LEFT,
         // d-pad/arrow right
-        CURSOR_RIGHT
+        CURSOR_RIGHT,
+        // advance a counter by ten
+        CURSOR_BIGUP,
+        // decrement a counter by ten
+        CURSOR_BIGDOWN,
+        // jump to the top of a menu/list
+        CURSOR_JUMPTOP,
+        // jump to the bottom of a menu/list
+        CURSOR_JUMPBOTTOM
 
     }
 }
