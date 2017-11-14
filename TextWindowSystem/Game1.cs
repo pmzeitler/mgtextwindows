@@ -29,6 +29,8 @@ namespace net.PhoebeZeitler.TextWindowSystem
         int transparency = 255;
         Int64 currentTime = 0;
 
+        bool testTransparencyFade = false;
+
         int framesPerSecond = 60;
 
         public Game1()
@@ -69,7 +71,7 @@ namespace net.PhoebeZeitler.TextWindowSystem
 
             WindowBorder border = new WindowBorder(corner, horiz, vert);
 
-            window = new DefaultTextWindow("demo", new Rectangle(250, 500, 500, 150), Color.AliceBlue, "AliceBlueDemoBox", defaultFont, Color.DarkOrchid);
+            window = new DefaultTextWindow("demo", new Rectangle(250, 500, 500, 150), new Color(Color.DarkRed, 128), "AliceBlueDemoBox", defaultFont, Color.DarkOrchid);
             window.SetupBorder(border, 8);
 
             window2 = new DefaultTextWindow("demo2", new Rectangle(88, 50, 400, 80), Color.DarkSeaGreen, "SmallDemoBox", defaultFont, Color.Silver);
@@ -98,15 +100,19 @@ namespace net.PhoebeZeitler.TextWindowSystem
             // TODO: Add your update logic here
 
             currentTime += gameTime.ElapsedGameTime.Milliseconds;
-            if (currentTime >= (1000 / framesPerSecond))
+
+            if(testTransparencyFade)
             {
-                currentTime = 0;
-                transparency -= 4;
-                if (transparency <= 0)
+                if (currentTime >= (1000 / framesPerSecond))
                 {
-                    transparency = 255;
+                    currentTime = 0;
+                    transparency -= 4;
+                    if (transparency <= 0)
+                    {
+                        transparency = 255;
+                    }
+                    window.SetTransparency(transparency);
                 }
-                window.SetTransparency(transparency);
             }
 
             base.Update(gameTime);
