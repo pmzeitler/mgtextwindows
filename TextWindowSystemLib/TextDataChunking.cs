@@ -33,4 +33,21 @@ namespace net.PhoebeZeitler.TextWindowSystem.TextDataChunking
 
         public abstract List<TextDataChunk> chunkThis(string StringDataIn); 
     }
+
+    public abstract class TextDataPositioner
+    {
+        public TextDataPositioner()
+        {
+            //default constructor;
+        }
+
+        public abstract List<TextDataChunk> measureChunks(List<TextDataChunk> dataChunks, SpriteFont font);
+
+        protected abstract String getSpacer();
+
+        protected Vector2 getSpacerDimensions(SpriteFont font)
+        {
+            return font.MeasureString(getSpacer());
+        }
+    }
 }
