@@ -44,10 +44,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TextDataChunkers\TextChunker_en-us.cs" />
+    <Compile Include="TextDataChunking.cs" />
     <Compile Include="DrawableTextWindow.cs" />
     <Compile Include="DrawableWindow.cs" />
     <Compile Include="EnumWindowInteractions.cs" />
     <Compile Include="DefaultTextWindow.cs" />
+    <Compile Include="MultipageTextWindow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WindowBorder.cs" />
     <Compile Include="WindowLayer.cs" />
