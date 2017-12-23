@@ -18,12 +18,20 @@ namespace net.PhoebeZeitler.TextWindowSystem.TextDataChunking
         public Rectangle dimensions;
     }
 
-    public struct TextDataLine
+    public class TextDataPage
     {
-        public SpriteFont font;
-        public string dataLine;
-        public int lineNumber;
-        public Rectangle dimensions;
+        private List<TextDataChunk> dataChunks;
+        public List<TextDataChunk> DataChunks {
+            get
+            {
+                return dataChunks;
+            }
+        }
+
+        public TextDataPage()
+        {
+            dataChunks = new List<TextDataChunk>();
+        }
     }
 
     public class TextDataChunkerFactory
@@ -44,24 +52,14 @@ namespace net.PhoebeZeitler.TextWindowSystem.TextDataChunking
 
 
         }
-        /*
-        public static void SetTextDataChunker(TextDataChunker constructorIn)
-        {
-            dataChunker = constructorIn;
-        }
-        */
+
         public static TextDataChunker Chunker
         {
             get {
                 return dataChunker;
             }
         }
-        /*
-        public static void SetTextDataPositioner(TextDataPositioner constructorIn)
-        {
-            dataPositioner = constructorIn;
-        }
-        */
+
         public static TextDataPositioner Positioner
         {
             get {
@@ -91,9 +89,17 @@ namespace net.PhoebeZeitler.TextWindowSystem.TextDataChunking
 
         protected abstract String getSpacer();
 
+        private Vector2 spacerDimensions = Vector2.Zero;
+
         protected Vector2 getSpacerDimensions(SpriteFont font)
         {
-            return font.MeasureString(getSpacer());
+            if (spacerDimensions.Equals(Vector2.Zero))
+            {
+                spacerDimensions = font.MeasureString(getSpacer());
+            }
+            return spacerDimensions;
         }
+
+        public abstract List<TextDataPage> paginateChunks(List<TextDataChunk> dataChunks, SpriteFont font, Rectangle boundingBox);
     }
 }

@@ -32,6 +32,9 @@ namespace net.PhoebeZeitler.TextWindowSystem.TextDataChunking
 
     public class TextDataPositioner_enUS : TextDataPositioner
     {
+        private const int SPACER_BUFFER_X = 0;
+        private const int SPACER_BUFFER_Y = 2;
+
         protected override string getSpacer()
         {
             return TextDataChunker_enUS.SPLITTER;
@@ -50,6 +53,62 @@ namespace net.PhoebeZeitler.TextWindowSystem.TextDataChunking
             }
 
             return dataChunks;
+        }
+
+
+        public override List<TextDataPage> paginateChunks(List<TextDataChunk> dataChunks, SpriteFont font, Rectangle boundingBox)
+        {
+            List<TextDataPage> retval = new List<TextDataPage>();
+            TextDataPage currentPage = new TextDataPage();
+            retval.Add(currentPage);
+            
+
+            List<TextDataChunk> measuredChunks = this.measureChunks(dataChunks, font);
+
+            int currentX = boundingBox.X;
+            int currentY = boundingBox.Y;
+
+            for (int i = 0; i < measuredChunks.Count; i++)
+            {
+                TextDataChunk chunk = measuredChunks[i];
+                //does it fit on the current line?
+                if ((currentX + chunk.dimensions.Width) <= boundingBox.Width)
+                {
+                    //yes, add it to the current line and advance the pointer
+                    AdvancePointer(font, ref currentX, currentY, ref chunk);
+                }
+                else
+                {
+                    //OK, can we fit it on the next line?
+                    if ((currentY + chunk.dimensions.Height + SPACER_BUFFER_Y) <= boundingBox.Height)
+                    {
+                        //yes, line return
+                        currentX = boundingBox.X;
+                        currentY += (chunk.dimensions.Height + SPACER_BUFFER_Y);
+                        AdvancePointer(font, ref currentX, currentY, ref chunk);
+                    }
+                    else
+                    {
+                        //nope-- add a new page
+                        currentPage = new TextDataPage();
+                        retval.Add(currentPage);
+                        currentX = boundingBox.X;
+                        currentY = boundingBox.Y;
+                        AdvancePointer(font, ref currentX, currentY, ref chunk);
+                    }
+                }
+
+                currentPage.DataChunks.Add(chunk);
+            }
+
+            return retval;
+        }
+
+        private void AdvancePointer(SpriteFont font, ref int currentX, int currentY, ref TextDataChunk chunk)
+        {
+            chunk.dimensions.X = currentX;
+            chunk.dimensions.Y = currentY;
+            currentX += (chunk.dimensions.Width + (int)(getSpacerDimensions(font).X) + SPACER_BUFFER_X);
         }
     }
 }
