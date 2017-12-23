@@ -33,7 +33,7 @@ namespace net.PhoebeZeitler.TextWindowSystem
         int transparency = 255;
         Int64 currentTime = 0;
 
-        bool testTransparencyFade = false;
+        bool testTransparencyFade = true;
 
         int framesPerSecond = 60;
 
@@ -79,7 +79,9 @@ namespace net.PhoebeZeitler.TextWindowSystem
 
             WindowBorder border = new WindowBorder(corner, horiz, vert);
 
-            window = new DefaultTextWindow("demo", new Rectangle(250, 500, 500, 150), new Color(Color.DarkRed, 128), "AliceBlueDemoBox", defaultFont, Color.DarkOrchid);
+            string window1Text = "testTransparencyFade is " + testTransparencyFade.ToString();
+
+            window = new DefaultTextWindow("demo", new Rectangle(250, 500, 500, 150), new Color(Color.DarkRed, 128), window1Text, smallFont, Color.DarkOrchid);
             window.SetupBorder(border, 8);
 
             window2 = new DefaultTextWindow("demo2", new Rectangle(88, 50, 400, 80), Color.DarkSeaGreen, "SmallDemoBox", defaultFont, Color.Silver);
