@@ -11,7 +11,7 @@ using net.PhoebeZeitler.TextWindowSystem;
 
 namespace net.PhoebeZeitler.TextWindowSystem.TextDataChunking
 {
-    public struct TextDataChunk
+    public class TextDataChunk
     {
         public SpriteFont font;
         public string data;

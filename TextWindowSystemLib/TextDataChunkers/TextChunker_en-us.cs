@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,6 +36,8 @@ namespace net.PhoebeZeitler.TextWindowSystem.TextDataChunking
         private const int SPACER_BUFFER_X = 0;
         private const int SPACER_BUFFER_Y = 2;
 
+        private const bool DEBUG_THIS = false;
+
         protected override string getSpacer()
         {
             return TextDataChunker_enUS.SPLITTER;
@@ -61,9 +64,16 @@ namespace net.PhoebeZeitler.TextWindowSystem.TextDataChunking
             List<TextDataPage> retval = new List<TextDataPage>();
             TextDataPage currentPage = new TextDataPage();
             retval.Add(currentPage);
-            
+            if (DEBUG_THIS)
+            {
+                Debug.WriteLine("dataChunks: " + dataChunks.Count);
+            }
 
             List<TextDataChunk> measuredChunks = this.measureChunks(dataChunks, font);
+            if (DEBUG_THIS)
+            {
+                Debug.WriteLine("measuredChunks: " + measuredChunks.Count);
+            }
 
             int currentX = boundingBox.X;
             int currentY = boundingBox.Y;
@@ -72,7 +82,7 @@ namespace net.PhoebeZeitler.TextWindowSystem.TextDataChunking
             {
                 TextDataChunk chunk = measuredChunks[i];
                 //does it fit on the current line?
-                if ((currentX + chunk.dimensions.Width) <= boundingBox.Width)
+                if ((currentX + chunk.dimensions.Width) < boundingBox.Width)
                 {
                     //yes, add it to the current line and advance the pointer
                     AdvancePointer(font, ref currentX, currentY, ref chunk);
@@ -80,7 +90,7 @@ namespace net.PhoebeZeitler.TextWindowSystem.TextDataChunking
                 else
                 {
                     //OK, can we fit it on the next line?
-                    if ((currentY + chunk.dimensions.Height + SPACER_BUFFER_Y) <= boundingBox.Height)
+                    if ((currentY + chunk.dimensions.Height + SPACER_BUFFER_Y) < boundingBox.Height)
                     {
                         //yes, line return
                         currentX = boundingBox.X;
@@ -90,6 +100,10 @@ namespace net.PhoebeZeitler.TextWindowSystem.TextDataChunking
                     else
                     {
                         //nope-- add a new page
+                        if (DEBUG_THIS)
+                        {
+                            Debug.WriteLine("Page " + (retval.Count - 1) + " has chunk count " + currentPage.DataChunks.Count);
+                        }
                         currentPage = new TextDataPage();
                         retval.Add(currentPage);
                         currentX = boundingBox.X;
@@ -97,7 +111,13 @@ namespace net.PhoebeZeitler.TextWindowSystem.TextDataChunking
                         AdvancePointer(font, ref currentX, currentY, ref chunk);
                     }
                 }
-
+                if (DEBUG_THIS)
+                {
+                    Debug.WriteLine("Chunk " + i + ": \"" + chunk.data + "\" " +
+                    " Width/X/Xmax: " + chunk.dimensions.Width.ToString() + "/" + chunk.dimensions.X.ToString() + "/" + boundingBox.Width +
+                    " Height/Y/Ymax: " + chunk.dimensions.Height.ToString() + "/" + chunk.dimensions.Y.ToString() + "/" + boundingBox.Height
+                    );
+                }
                 currentPage.DataChunks.Add(chunk);
             }
 

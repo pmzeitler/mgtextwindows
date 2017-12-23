@@ -71,6 +71,7 @@ namespace net.PhoebeZeitler.TextWindowSystem
         {
             this.border = border;
             borderBuffer = buffer;
+            textArea = border.FindInnerMargin(dimensions, borderBuffer);
         }
 
         // Minimum viable drawable text window
@@ -82,6 +83,7 @@ namespace net.PhoebeZeitler.TextWindowSystem
             this.textContents = textContents;
             this.textFont = textFont;
             this.textColor = textColor;
+            this.textArea = new Rectangle(Point.Zero, dimensions.Size);
         }
 
         public DefaultTextWindow(String windowId, Rectangle dimensions, Color bgColor, String textContents, SpriteFont textFont, 

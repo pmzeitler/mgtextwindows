@@ -27,6 +27,7 @@ namespace net.PhoebeZeitler.TextWindowSystem
         //RenderTarget2D rt;
         DefaultTextWindow window;
         DefaultTextWindow window2;
+        MultipageTextWindow window3;
 
         WindowLayer layer;
 
@@ -88,8 +89,13 @@ namespace net.PhoebeZeitler.TextWindowSystem
 
             layer = new WindowLayer("Layer 0");
 
+            string longWindowText = "The sand-colored man sat in the sand-colored bar, in the sand-colored town, drinking sand-colored liquor from dusty, sandblasted glasses from a sandswept bartender.  In Dazil, Ramsus thought, you had better like that particular shade of tan, because it's all you'll ever see.  He reflected on why he chose Dazil--on why he had decided to hit the skids here.";
+
+            window3 = new MultipageTextWindow("demo3", new Rectangle(30, 250, 200, 120), Color.Indigo, longWindowText, smallFont, Color.White);
+
             layer.AddWindow(window);
             layer.AddWindow(window2);
+            layer.AddWindow(window3);
 
 
         }
@@ -144,12 +150,13 @@ namespace net.PhoebeZeitler.TextWindowSystem
             RenderTargetBinding[] oldTarget = spriteBatch.GraphicsDevice.GetRenderTargets();
             
             GraphicsDevice.Clear(Color.Black);
+            
             spriteBatch.Begin();
 
                 Vector2 textPos = new Vector2(200, 525);
-                spriteBatch.DrawString(defaultFont, "Testing", textPos, Color.White);
+                spriteBatch.DrawString(defaultFont, window3.HasDisplayedAllPages.ToString(), textPos, Color.White);
             spriteBatch.End();
-
+            
             BlendState blendState = BlendState.NonPremultiplied;
 
             spriteBatch.Begin(SpriteSortMode.Deferred, blendState);
