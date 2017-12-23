@@ -55,3 +55,9 @@
 /processorParam:TextureFormat=Color
 /build:WindowBorderVertDemo.png
 
+#begin SmallDefault.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:SmallDefault.spritefont
+

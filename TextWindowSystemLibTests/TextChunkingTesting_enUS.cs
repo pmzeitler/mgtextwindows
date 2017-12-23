@@ -33,6 +33,8 @@ namespace TextWindowSystemLibTests
                 }
             }
             Assert.AreEqual(textToChunk, checkString, "Text order was not preserved during chunking/reassembly");
+
+            
         }
     }
 }

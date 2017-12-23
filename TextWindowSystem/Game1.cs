@@ -2,7 +2,8 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
-//using net.PhoebeZeitler.TextWindowSystem;
+using net.PhoebeZeitler.TextWindowSystem.TextDataChunking;
+
 
 
 /// <summary>
@@ -21,7 +22,8 @@ namespace net.PhoebeZeitler.TextWindowSystem
         SpriteBatch spriteBatch;
 
         SpriteFont defaultFont;
-
+        SpriteFont smallFont;
+        
         //RenderTarget2D rt;
         DefaultTextWindow window;
         DefaultTextWindow window2;
@@ -52,6 +54,9 @@ namespace net.PhoebeZeitler.TextWindowSystem
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            //load chunker and positioner
+            TextDataChunker throwaway = TextDataChunkerFactory.Chunker;
+
             base.Initialize();
         }
 
@@ -66,6 +71,7 @@ namespace net.PhoebeZeitler.TextWindowSystem
 
             // TODO: use this.Content to load your game content here
             defaultFont = Content.Load<SpriteFont>("SystemDefault");
+            smallFont = Content.Load<SpriteFont>("SmallDefault");
 
             Texture2D corner = Content.Load<Texture2D>("WindowBorderCornerDemo");
             Texture2D horiz = Content.Load<Texture2D>("WindowBorderHorizDemo");
@@ -158,6 +164,8 @@ namespace net.PhoebeZeitler.TextWindowSystem
             spriteBatch.End();
 
             // TODO: Add your drawing code here
+
+
 
             base.Draw(gameTime);
         }

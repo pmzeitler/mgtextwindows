@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +24,50 @@ namespace net.PhoebeZeitler.TextWindowSystem.TextDataChunking
         public string dataLine;
         public int lineNumber;
         public Rectangle dimensions;
+    }
+
+    public class TextDataChunkerFactory
+    {
+        private static TextDataChunker dataChunker = null;
+        private static TextDataPositioner dataPositioner = null;
+        
+        static TextDataChunkerFactory()
+        {
+            String localeSuffix = ConfigurationManager.AppSettings["TextChunker.Locale"];
+            string namespacePrefix = "net.PhoebeZeitler.TextWindowSystem.TextDataChunking.";
+            string chunkerName = namespacePrefix + "TextDataChunker_" + localeSuffix;
+            Debug.WriteLine("Attempting to load chunker \"" + chunkerName + "\"");
+            dataChunker = (TextDataChunker)Activator.CreateInstance(Type.GetType(chunkerName));
+            string positionerName = namespacePrefix + "TextDataPositioner_" + localeSuffix;
+            Debug.WriteLine("Attempting to load positioner \"" + positionerName + "\"");
+            dataPositioner = (TextDataPositioner)Activator.CreateInstance(Type.GetType(positionerName));
+
+
+        }
+        /*
+        public static void SetTextDataChunker(TextDataChunker constructorIn)
+        {
+            dataChunker = constructorIn;
+        }
+        */
+        public static TextDataChunker Chunker
+        {
+            get {
+                return dataChunker;
+            }
+        }
+        /*
+        public static void SetTextDataPositioner(TextDataPositioner constructorIn)
+        {
+            dataPositioner = constructorIn;
+        }
+        */
+        public static TextDataPositioner Positioner
+        {
+            get {
+                return dataPositioner;
+            }
+        }
     }
 
     public abstract class TextDataChunker
