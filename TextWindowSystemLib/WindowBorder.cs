@@ -74,44 +74,52 @@ namespace net.PhoebeZeitler.TextWindowSystem
             this.pipingRight = pipingRight;
         }
 
+        private struct MarginData
+        {
+            public int top;
+            public int right;
+            public int bottom;
+            public int left;
+        }
+
         /// <summary>
         /// Retrieve the margin inside the window that this WindowBorder will draw in.
         /// </summary>
         /// <returns>A Vector4 containing margins as follows: X = top/North, Y = right/East, Z = bottom/South, W = left/West</returns>
-        public Vector4 FindMargins()
+        private MarginData FindMargins()
         {
-            Vector4 retval = new Vector4();
+            MarginData retval = new MarginData();
 
             if(this.pipingTop != null)
             {
-                retval.X = pipingTop.Height;
+                retval.top = pipingTop.Height;
             } else
             {
-                retval.X = 0;
+                retval.top = 0;
             }
             if (this.pipingRight != null)
             {
-                retval.Y = pipingRight.Width;
+                retval.right = pipingRight.Width;
             }
             else
             {
-                retval.Y = 0;
+                retval.right = 0;
             }
             if (this.pipingBottom != null)
             {
-                retval.Z = pipingBottom.Height;
+                retval.bottom = pipingBottom.Height;
             }
             else
             {
-                retval.Z = 0;
+                retval.bottom = 0;
             }
             if (this.pipingLeft != null)
             {
-                retval.W = pipingLeft.Width;
+                retval.left = pipingLeft.Width;
             }
             else
             {
-                retval.W = 0;
+                retval.left = 0;
             }
             return retval;
         }
@@ -120,12 +128,12 @@ namespace net.PhoebeZeitler.TextWindowSystem
         {
             Rectangle retval = Rectangle.Empty;
 
-            Vector4 margins = FindMargins();
+            MarginData margins = FindMargins();
 
-            retval.X = buffer + (int)margins.W;
-            retval.Y = buffer + (int)margins.X;
-            retval.Width = (int)(windowSize.Width - ((margins.Y + buffer) + retval.X));
-            retval.Height = (int)(windowSize.Height - ((margins.Z + buffer) + retval.Y));
+            retval.X = buffer + (int)margins.left;
+            retval.Y = buffer + (int)margins.top;
+            retval.Width = (int)(windowSize.Width - (margins.right + buffer));
+            retval.Height = (int)(windowSize.Height - (margins.bottom + buffer));
 
             return retval;
         }
@@ -137,37 +145,37 @@ namespace net.PhoebeZeitler.TextWindowSystem
         /// <param name="TextureDimensions">The dimensions of the window texture.</param>
         public virtual void Draw(SpriteBatch sb, Rectangle TextureDimensions)
         {
-            Vector4 margins = FindMargins();
+            MarginData margins = FindMargins();
 
-            int nextY = (int)margins.X;
-            while (nextY < (TextureDimensions.Height - margins.Z))
+            int nextY = (int)margins.top;
+            while (nextY < (TextureDimensions.Height - margins.bottom))
             {
                 sb.Draw(this.pipingLeft, new Vector2(0, nextY), Color.White);
                 nextY += this.pipingLeft.Height;
             }
-            nextY = (int)margins.X;
-            while (nextY < (TextureDimensions.Height - margins.Z))
+            nextY = (int)margins.top;
+            while (nextY < (TextureDimensions.Height - margins.bottom))
             {
-                sb.Draw(this.pipingRight, new Vector2((TextureDimensions.Width - margins.Y), nextY), Color.White);
+                sb.Draw(this.pipingRight, new Vector2((TextureDimensions.Width - margins.right), nextY), Color.White);
                 nextY += this.pipingRight.Height;
             }
-            int nextX = (int)margins.W;
-            while (nextX < (TextureDimensions.Width - margins.Y))
+            int nextX = (int)margins.left;
+            while (nextX < (TextureDimensions.Width - margins.right))
             {
                 sb.Draw(this.pipingTop, new Vector2(nextX, 0), Color.White);
                 nextX += this.pipingTop.Width;
             }
-            nextX = (int)margins.W ;
-            while (nextX < (TextureDimensions.Width - margins.Y))
+            nextX = (int)margins.left ;
+            while (nextX < (TextureDimensions.Width - margins.right))
             {
-                sb.Draw(this.pipingBottom, new Vector2(nextX, (TextureDimensions.Height - margins.Z)), Color.White);
+                sb.Draw(this.pipingBottom, new Vector2(nextX, (TextureDimensions.Height - margins.bottom)), Color.White);
                 nextX += this.pipingBottom.Width;
             }
 
             sb.Draw(this.cornerUpLf, Vector2.Zero, Color.White);
-            sb.Draw(this.cornerUpRt, new Vector2((TextureDimensions.Width - margins.Y), 0), Color.White);
-            sb.Draw(this.cornerLoLf, new Vector2(0, (TextureDimensions.Height - margins.Z)), Color.White);
-            sb.Draw(this.cornerLoRt, new Vector2((TextureDimensions.Width - margins.Y), (TextureDimensions.Height - margins.Z)), Color.White);
+            sb.Draw(this.cornerUpRt, new Vector2((TextureDimensions.Width - margins.right), 0), Color.White);
+            sb.Draw(this.cornerLoLf, new Vector2(0, (TextureDimensions.Height - margins.bottom)), Color.White);
+            sb.Draw(this.cornerLoRt, new Vector2((TextureDimensions.Width - margins.right), (TextureDimensions.Height - margins.bottom)), Color.White);
 
 
         }

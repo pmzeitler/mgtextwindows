@@ -91,7 +91,8 @@ namespace net.PhoebeZeitler.TextWindowSystem
 
             string longWindowText = "The sand-colored man sat in the sand-colored bar, in the sand-colored town, drinking sand-colored liquor from dusty, sandblasted glasses from a sandswept bartender.  In Dazil, Ramsus thought, you had better like that particular shade of tan, because it's all you'll ever see.  He reflected on why he chose Dazil--on why he had decided to hit the skids here.";
 
-            window3 = new MultipageTextWindow("demo3", new Rectangle(30, 250, 200, 120), Color.Indigo, longWindowText, smallFont, Color.White);
+            window3 = new MultipageTextWindow("demo3", new Rectangle(30, 250, 200, 110), Color.Indigo, longWindowText, smallFont, Color.White);
+            window3.SetupBorder(border, 4);
 
             layer.AddWindow(window);
             layer.AddWindow(window2);

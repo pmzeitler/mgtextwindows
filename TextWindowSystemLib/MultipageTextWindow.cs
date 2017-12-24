@@ -33,6 +33,12 @@ namespace net.PhoebeZeitler.TextWindowSystem
             PrepTextForChunking();
         }
 
+        public override void SetupBorder(WindowBorder border, int buffer)
+        {
+            base.SetupBorder(border, buffer);
+            PrepTextForChunking();
+        }
+
         private bool PrepTextForChunking()
         {
             bool retval = true;

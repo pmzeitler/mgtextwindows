@@ -36,7 +36,7 @@ namespace net.PhoebeZeitler.TextWindowSystem.TextDataChunking
         private const int SPACER_BUFFER_X = 0;
         private const int SPACER_BUFFER_Y = 2;
 
-        private const bool DEBUG_THIS = false;
+        private const bool DEBUG_THIS = true;
 
         protected override string getSpacer()
         {
@@ -89,8 +89,16 @@ namespace net.PhoebeZeitler.TextWindowSystem.TextDataChunking
                 }
                 else
                 {
-                    //OK, can we fit it on the next line?
-                    if ((currentY + chunk.dimensions.Height + SPACER_BUFFER_Y) < boundingBox.Height)
+                    //OK, can we fit it on the next line? 
+                    // We have to double the chunk.dimensions.Height because Y is the TOP of the line and we need to find where the BOTTOM of the line is
+                    if (DEBUG_THIS)
+                    {
+                        Debug.WriteLine("Checking next line height: currentY/expectedNextY/boundingBoxHeight: " + currentY + "/" +
+                            (currentY + (chunk.dimensions.Height * 2) + SPACER_BUFFER_Y) + "/" +
+                            boundingBox.Height);
+                    }
+                    //This can be a <= and not a < because if it exactly matches, the bottom of the final line will perfectly fit in the box
+                    if ((currentY + (chunk.dimensions.Height * 2) + SPACER_BUFFER_Y) <= boundingBox.Height)
                     {
                         //yes, line return
                         currentX = boundingBox.X;

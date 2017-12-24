@@ -67,7 +67,7 @@ namespace net.PhoebeZeitler.TextWindowSystem
             return true;
         }
 
-        public void SetupBorder(WindowBorder border, int buffer)
+        public virtual void SetupBorder(WindowBorder border, int buffer)
         {
             this.border = border;
             borderBuffer = buffer;
