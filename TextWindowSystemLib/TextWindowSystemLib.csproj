@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="InteractiveWindow.cs" />
     <Compile Include="TextDataChunkers\TextChunker_en-us.cs" />
     <Compile Include="TextDataChunking.cs" />
     <Compile Include="DrawableTextWindow.cs" />
