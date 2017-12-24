@@ -36,7 +36,7 @@ namespace net.PhoebeZeitler.TextWindowSystem.TextDataChunking
         private const int SPACER_BUFFER_X = 0;
         private const int SPACER_BUFFER_Y = 2;
 
-        private const bool DEBUG_THIS = true;
+        private const bool DEBUG_THIS = false;
 
         protected override string getSpacer()
         {
