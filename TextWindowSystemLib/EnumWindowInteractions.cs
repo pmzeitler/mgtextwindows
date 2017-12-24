@@ -2,7 +2,7 @@
 namespace net.PhoebeZeitler.TextWindowSystem
 {
     /// <summary>
-    /// A convenience class that standardizes all possible user interactions with an active window.
+    /// A convenience class that standardizes all possible user inputs to an active window.
     /// </summary>
     public enum WindowInteractions
     {
@@ -29,5 +29,29 @@ namespace net.PhoebeZeitler.TextWindowSystem
         // jump to the bottom of a menu/list
         CURSOR_JUMPBOTTOM
 
+    }
+
+    /// <summary>
+    /// A convenience class that encapsulates reactions to user input on an active window.
+    /// </summary>
+    public class WindowResponse
+    {
+        private bool operationCompleted = false;
+        public bool OperationCompleted { get { return operationCompleted; } }
+        private bool keepWindowOpen = false;
+        public bool KeepWindowOpen { get { return keepWindowOpen; } }
+        private bool payloadExists = false;
+        public bool PayloadExists { get { return payloadExists; } }
+
+        private object payload = null;
+        public object Payload { get { return payload; } }
+
+        public WindowResponse(bool operationCompleted, bool keepWindowOpen, bool payloadExists, object payload)
+        {
+            this.operationCompleted = operationCompleted;
+            this.keepWindowOpen = keepWindowOpen;
+            this.payloadExists = payloadExists;
+            this.payload = payload;
+        }
     }
 }

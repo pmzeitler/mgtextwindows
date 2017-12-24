@@ -10,7 +10,7 @@ using net.PhoebeZeitler.TextWindowSystem.TextDataChunking;
 
 namespace net.PhoebeZeitler.TextWindowSystem
 {
-    public class MultipageTextWindow : DefaultTextWindow
+    public class MultipageTextWindow : DefaultTextWindow, InteractiveWindow
     {
         protected int currentPage = 0;
         protected List<TextDataPage> dataPages;
@@ -76,6 +76,16 @@ namespace net.PhoebeZeitler.TextWindowSystem
             {
                 sb.DrawString(textFont, chunk.data, new Vector2(chunk.dimensions.X, chunk.dimensions.Y), textColor);
             }
+        }
+
+        public void ProcessInput(WindowInteractions interactionsIn)
+        {
+            throw new NotImplementedException();
+        }
+
+        public WindowResponse GetWindowResponse()
+        {
+            throw new NotImplementedException();
         }
     }
 }
