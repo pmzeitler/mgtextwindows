@@ -56,7 +56,7 @@ namespace net.PhoebeZeitler.TextWindowSystem
         {
             // TODO: Add your initialization logic here
             //load chunker and positioner
-            TextDataChunker throwaway = TextDataChunkerFactory.Chunker;
+            TextDataChunkerFactory.SetupChunkers("en-US");
 
             base.Initialize();
         }

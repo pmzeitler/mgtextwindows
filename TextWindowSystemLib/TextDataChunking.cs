@@ -38,7 +38,10 @@ namespace net.PhoebeZeitler.TextWindowSystem.TextDataChunking
     {
         private static TextDataChunker dataChunker = null;
         private static TextDataPositioner dataPositioner = null;
-        
+
+        private const string DEFAULT_LOCALE = "en-US";
+        private const bool DEBUG_THIS = true;
+        /*
         static TextDataChunkerFactory()
         {
             String localeSuffix = ConfigurationManager.AppSettings["TextChunker.Locale"];
@@ -52,10 +55,49 @@ namespace net.PhoebeZeitler.TextWindowSystem.TextDataChunking
 
 
         }
+        */
+
+        public static void SetupChunkers(string localeIn = null)
+        {
+            string localeToUse = null;
+            if (string.IsNullOrWhiteSpace(localeIn))
+            {
+                if (DEBUG_THIS)
+                {
+                    Debug.WriteLine("Blank/null locale passed in: \"" + localeIn + "\"; using default  \"" + DEFAULT_LOCALE + "\"");
+                }
+                localeToUse = DEFAULT_LOCALE;
+            }
+            else
+            {
+                localeToUse = localeIn;
+            }
+
+            switch(localeToUse)
+            {
+                case "en-US":
+                    dataChunker = new TextDataChunker_enUS();
+                    dataPositioner = new TextDataPositioner_enUS();
+                    break;
+                default:
+                    if (DEBUG_THIS)
+                    {
+                        Debug.WriteLine("Bad locale passed in: \"" + localeIn + "\"; using default PZ implementation of \"en-US\"");
+                    }
+                    dataChunker = new TextDataChunker_enUS();
+                    dataPositioner = new TextDataPositioner_enUS();
+                    break;
+            }
+        }
+
 
         public static TextDataChunker Chunker
         {
             get {
+                if (dataChunker == null)
+                {
+                    SetupChunkers();
+                }
                 return dataChunker;
             }
         }
@@ -63,6 +105,10 @@ namespace net.PhoebeZeitler.TextWindowSystem.TextDataChunking
         public static TextDataPositioner Positioner
         {
             get {
+                if (dataPositioner == null)
+                {
+                    SetupChunkers();
+                }
                 return dataPositioner;
             }
         }
