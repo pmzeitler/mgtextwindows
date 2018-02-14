@@ -23,6 +23,11 @@ namespace net.PhoebeZeitler.TextWindowSystem
             this.layerId = layerId;
         }
 
+        public DrawableWindow GetNewWindow(string windowId, Rectangle dimensions, Color bgColor, string textContents, SpriteFont textFont, Color textColor)
+        {
+            return new MultipageTextWindow(windowId, dimensions, bgColor, textContents, textFont, textColor);
+        }
+
         public bool AddWindow(DrawableWindow windowIn)
         {
             if (windows.Contains(windowIn))
